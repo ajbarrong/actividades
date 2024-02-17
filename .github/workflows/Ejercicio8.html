@@ -1,0 +1,142 @@
+<html>
+	<head>
+		<!-- Metadatos para seleccionar charset y hacer responsive -->
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<!-- Título de la web -->
+		<title>Super Dashboard</title>
+
+		<!-- Injectamos el loader de Google -->
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+		<!-- Injectamos el ficheros Javascript y hoja de estilos de nuesto Dashboard -->
+		<script src="charts.js"></script> 
+		<link rel="stylesheet" href="style.css">
+	</head>
+
+	<body>
+		<!-- Título superior -->
+		<h1>Super Dashboard</h1>
+
+		<!-- Grid con todos los paneles -->
+		<div class="dashboard-wrapper">
+			<div id='p1' class='panel'><h2>Panel principal</h2> <div id='p1Chart'></div> </div>
+			<div id='p2' class='panel'><h2>Sub panel 1</h2> <div id='p2Chart'></div> </div>
+			<div id='p3' class='panel'><h2>Sub panel 2</h2> <div id='p3Chart'></div> </div>
+			<div id='p4' class='panel'><h2>Sub panel 3</h2> <div id='p4Chart'></div> </div>
+			<div id='p5' class='panel'><h2>Bottom panel</h2> <div id='p5Chart'></div> </div>
+		</div>
+
+		<!-- Pié de página -->
+		<div class='bottom'><a target='_blank' href=''>Made with love by Albert Coronado</a></div>
+		<script>
+			google.charts.load('current', {'packages':['sankey','corechart', 'bar', 'calendar']});
+			google.charts.setOnLoadCallback(drawCharts);
+			/* función que carga cada uno de los gráficos */
+			function drawCharts() {
+				drawChartP1();
+				drawChartP2();
+				drawChartP3();
+				drawChartP4();
+				drawChartP5();
+			}
+			function drawChartP1() {
+			/* Cargamos los datos */
+			var data = google.visualization.arrayToDataTable([
+				['ID', 'Año de mayor pobreza', 'Porcentaje de pobreza', 'Region',     'Población'],
+				['AGS',    2010,              38.1,      'Norte',  1.313],
+				['BCN',    2010,              31.5,      'Norte',  3.769],
+				['BCS',    2010,              31.0,      'Norte',         0.798],
+				['CAM',    2010,               50.5,      'Norte',         0.928],
+				['COA',    2008,              32.7,      'Sur',    3.147],
+				['COL',    2010,              34.7,         'Norte',         0.731],
+				['CHIA',    2010,              78.5,       'Norte',    5.544],
+				['CHIH',    2010,              38.8,      'Norte',    0.878],
+				['CDMX',    2012,              28.9,      'Centro',    8.855],
+				['DUR',   2010,               51.6,      'Norte',         0.654],
+				['GTO',    2010,               48.5,      'Centro',         6.167],
+				['GRO',    2012,               69.7,      'Sur',         3.541],
+				['HGO',    2008,               55.2,      'Centro',         3.083],
+				['JAL',    2012,               39.8,      'Norte',         8.348],
+				['MEX',    2014,               49.6,      'Centro',         16.99],				
+				['MICH',    2014,              59.2,      'Sur',  4.749]
+			 ]);
+			 
+			 var options = {
+				title: 'Entidades federativas con año de mayor pobreza.' +
+				  ' X=Año de mayor pobreza, Y=Porcentaje de pobreza, Bubble size=Población, Bubble color=Region',
+				hAxis: {title: 'Año de mayor pobreza'},
+				vAxis: {title: 'Porcentaje de pobreza'},
+				bubble: {textStyle: {fontSize: 11}}
+			 };
+
+	/* Creamos la visualización, en este caso se visualizará en el div con id 'p1Chart' */
+	var chart = new google.visualization.BubbleChart(document.getElementById('p1Chart'));
+
+
+	/* Finalmente pintamos la visualización, el segundo parámetro son las opciones */
+  	chart.draw(data, options);
+	}
+		
+		</script>
+		<style>
+					/* Color de fondo gris, tipo de letra helvetica. El 'text-align: center' es para centrar el dashboard */
+		body {
+			text-align: center;
+			background-color: #ececec;
+			font-family: 'Helvetica', sans-serif;
+			}
+
+		/* Quitamos los margenes de los títulos tipo 2. Los de los distintos paneles */
+		h2 {
+			margin: 0px;
+			}
+
+		/* Márgenes en auto para que quede centrado en la página.
+			Tamaño máximo de 920 píxeles.
+			configuración del grid a 3 columnas con un espaciado de 15 píxeles. */
+		.dashboard-wrapper {
+			margin: auto;
+			max-width: 920px;
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-column-gap: 15px;
+			grid-row-gap: 15px;
+			}
+
+		/* Configuración de cada panel: texto alineado a la izquierda, color de fondo blanco, etc. */
+		.dashboard-wrapper .panel {
+			text-align: left;
+			background-color: #fff;
+			border: 1px solid #d3d3d3;
+			box-shadow: 0 0 4px 1px rgba(143,143,143,.2);
+			padding: 15px;
+			}
+
+		/* Los paneles con Id p1 y p5 ocuparan de la columna 1 a la 4 */
+		.dashboard-wrapper #p1.panel, .dashboard-wrapper #p5.panel {
+			grid-column: 1 / 4;
+			}
+
+		/* Configuración del footer */
+		.bottom {
+			font-size: 10px;
+			margin-top: 15px;
+			}
+
+		.bottom a {
+			color: #333;
+			text-decoration: none;
+			}
+
+		/* Configuración responsive: para dispositivos con pantalla de máximo 104 píxeles de resolución. todos los paneles ocuparán de la columna 1 a la 4 */
+		@media screen and (max-width: 1024px) {
+			.dashboard-wrapper .panel {
+				grid-column: 1 / 4;
+				}	
+			}
+				
+		</style>
+	</body>
+</html>
